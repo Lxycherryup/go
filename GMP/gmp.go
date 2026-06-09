@@ -1,1 +1,1 @@
-package gmp
+package main
