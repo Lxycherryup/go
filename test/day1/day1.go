@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 /*------------------------------------------------------------------------------------------*/
 /*
 go1.21以前 range 循环里的va变量会被复用。所以每次&val取到的都是同一个地址 最后都指向最后一次的值
@@ -94,29 +92,81 @@ make只适用于slice，map，channel
 
 // }
 
-func main() {
-	/*
-		数组写法 数组和slice的区别是  数组长度固定 slice长度不固定 slice := []int{1,2,3,4,5} 长度不固定
-		数组的长度也是类型的一部分 [3]int [5]int是两种数据类型 数组长度固定 值类型。赋值会整体拷贝(深拷贝)
-	*/
+// func main() {
+// 	/*
+// 		数组写法 数组和slice的区别是  数组长度固定 slice长度不固定 slice := []int{1,2,3,4,5} 长度不固定
+// 		数组的长度也是类型的一部分 [3]int [5]int是两种数据类型 数组长度固定 值类型。赋值会整体拷贝(深拷贝)
+// 	*/
 
-	/*
-		深拷贝和浅拷贝的区别
-		a := [3]int{1,2,3}
-		b := a
-		b[0] = 100
-		fmt.Println(a) //[1 2 3]
+// 	/*
+// 		深拷贝和浅拷贝的区别
+// 		a := [3]int{1,2,3}
+// 		b := a
+// 		b[0] = 100
+// 		fmt.Println(a) //[1 2 3]
 
+// 		a := []int{1,2,3}
+// 		b := a
+// 		b[0] = 100
+// 		fmt.Println(a) //[100,2,3] 因为切片时引用类型，底层共享共一块内存 也就造就了浅拷贝
+// 	*/
+// 	s1 := [...]int{1, 2, 3, 4, 5}
+// 	s2 := [...]int{6, 7, 8, 9, 10}
+// 	result := append(s1[:], s2[:]...)
+// 	fmt.Println(result)
 
-		a := []int{1,2,3}
-		b := a
-		b[0] = 100
-		fmt.Println(a) //[100,2,3] 因为切片时引用类型，底层共享共一块内存 也就造就了浅拷贝
+// }
 
-	*/
-	s1 := [...]int{1, 2, 3, 4, 5}
-	s2 := [...]int{6, 7, 8, 9, 10}
-	result := append(s1[:], s2[:]...)
-	fmt.Println(result)
+/*------------------------------------------------------------------------------------------*/
 
-}
+// 结构体比较
+// func main() {
+// 	sn1 := struct {
+// 		age  int
+// 		name string
+// 	}{age: 11, name: "qq"}
+
+// 	sn2 := struct {
+// 		age  int
+// 		name string
+// 	}{age: 11, name: "qq"}
+
+// 	if sn1 == sn2 {
+// 		fmt.Println("sn1 == sn2")
+// 	}
+
+// 	sm1 := struct {
+// 		age int
+// 		m   map[string]string
+// 	}{age: 11, m: map[string]string{"a": "1"}}
+// 	sm2 := struct {
+// 		age int
+// 		m   map[string]string
+// 	}{age: 11, m: map[string]string{"a": "1"}}
+
+// 	if sm1 == sm2 {
+// 		fmt.Println("sm1 == sm2")
+// 		/*
+// 		./day1.go:149:5: invalid operation: sm1 == sm2
+// 		(struct containing map[string]string cannot be compared)
+// 		*/
+
+// 		/*
+// 		可比较的类型（Comparable）
+// 		整数、浮点数、复数、布尔值
+// 		字符串
+// 		指针
+// 		数组（如果元素可比较）
+// 		结构体（如果所有字段可比较）
+// 		接口
+
+// 		不可比较的类型（Uncomparable）
+// 		map - 引用类型，内容可变
+// 		slice - 动态数组，无法定义比较语义
+// 		function - 函数无法比较
+// 		*/
+// 	}
+
+// }
+
+/*------------------------------------------------------------------------------------------*/
